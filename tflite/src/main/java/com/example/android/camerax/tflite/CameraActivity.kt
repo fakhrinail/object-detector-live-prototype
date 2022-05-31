@@ -209,11 +209,11 @@ class CameraActivity : AppCompatActivity() {
                 // Step 2: Initialize the detector object
                 val options = ObjectDetector.ObjectDetectorOptions.builder()
                     .setMaxResults(5)
-                    .setScoreThreshold(0f)
+                    .setScoreThreshold(ACCURACY_THRESHOLD)
                     .build()
                 val detector = ObjectDetector.createFromFileAndOptions(
                     this,
-                    "model.tflite",
+                    MODEL_PATH,
                     options
                 )
 
@@ -316,7 +316,6 @@ class CameraActivity : AppCompatActivity() {
         val location = mapOutputCoordinates(detectionResult.boundingBox)
 
         // Update the text and UI
-        // TODO: add score to DetectionResult
         activityCameraBinding.textPrediction.text =
             detectionResult.text
         (activityCameraBinding.boxPrediction.layoutParams as ViewGroup.MarginLayoutParams).apply {
@@ -467,8 +466,7 @@ class CameraActivity : AppCompatActivity() {
         private val TAG = CameraActivity::class.java.simpleName
 
         private const val ACCURACY_THRESHOLD = 0.5f
-        private const val MODEL_PATH = "coco_ssd_mobilenet_v1_1.0_quant.tflite"
-        private const val LABELS_PATH = "coco_ssd_mobilenet_v1_1.0_labels.txt"
+        private const val MODEL_PATH = "model.tflite"
     }
 }
 
